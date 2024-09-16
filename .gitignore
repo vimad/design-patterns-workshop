@@ -1,0 +1,13 @@
+.DS_Store
+*.class
+stocks.csv
+dpc5.iws
+dpc5.iml
+dpc5.ipr
+.idea/
+target/
+.shelf/
+out
+rebase-to-beginning.sh
+.project
+.classpath

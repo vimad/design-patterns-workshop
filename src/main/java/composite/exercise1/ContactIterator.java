@@ -15,16 +15,30 @@ import java.util.*;
  * whether there is a next element or not.
  */
 public class ContactIterator implements Iterator<Contact> {
+    private Contact nextContact;
+    private final Deque<Iterator<Contact>> unfinishedIterators =
+        new ArrayDeque<>();
+
     public ContactIterator(Contact contact) {
-        throw new UnsupportedOperationException("todo");
+        if (contact.isLeaf()) nextContact = contact;
+        else unfinishedIterators.addLast(contact.children());
     }
 
     public boolean hasNext() {
-        throw new UnsupportedOperationException("todo");
+        if (nextContact != null) return true;
+        nextContact = findNextLeaf();
+        return nextContact != null;
+    }
+
+    private Contact findNextLeaf() {
+        // homework - either a loop or recursively
     }
 
     public Contact next() {
-        throw new UnsupportedOperationException("todo");
+        if (!hasNext()) throw new NoSuchElementException();
+        var result = nextContact;
+        nextContact = null;
+        return result;
     }
 
     /**
@@ -33,6 +47,7 @@ public class ContactIterator implements Iterator<Contact> {
      * the composite tree structure.
      */
     public void remove() {
+        // you can only call remove() once after a next()
         throw new UnsupportedOperationException("todo");
     }
 }

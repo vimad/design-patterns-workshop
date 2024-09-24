@@ -1,16 +1,10 @@
 package strategy.exercise1;
 
-public class EmployeeTaxStrategy implements TaxStrategy {
+public final class EmployeeTaxStrategy implements TaxStrategy {
     private static final double RATE = 0.45;
 
-    private final TaxPayer context;
-
-    public EmployeeTaxStrategy(TaxPayer context) {
-        this.context = context;
-    }
-
     @Override
-    public double extortCash() {
+    public double extortCash(TaxPayer context) {
         return context.getIncome() * RATE;
     }
 }

@@ -8,6 +8,7 @@
 package strategy.exercise1;
 
 //DON'T CHANGE
-public interface TaxStrategy {
-    double extortCash();
+public sealed interface TaxStrategy
+    permits CompanyTaxStrategy, EmployeeTaxStrategy, TrustTaxStrategy {
+    double extortCash(TaxPayer context);
 }

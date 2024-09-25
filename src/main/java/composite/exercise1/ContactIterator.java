@@ -18,6 +18,8 @@ public class ContactIterator implements Iterator<Contact> {
     private Contact nextContact;
     private final Deque<Iterator<Contact>> unfinishedIterators =
         new ArrayDeque<>();
+    private Iterator<Contact> lastUsedIterator;
+    private boolean nextCalled = false;
 
     public ContactIterator(Contact contact) {
         if (contact.isLeaf()) nextContact = contact;
@@ -32,12 +34,24 @@ public class ContactIterator implements Iterator<Contact> {
 
     private Contact findNextLeaf() {
         // homework - either a loop or recursively
+        while (!unfinishedIterators.isEmpty()) {
+            lastUsedIterator = unfinishedIterators.peekLast();
+            if (lastUsedIterator.hasNext()) {
+                var contact = lastUsedIterator.next();
+                if (contact.isLeaf()) return contact;
+                else unfinishedIterators.addLast(contact.children());
+            } else {
+                unfinishedIterators.removeLast();
+            }
+        }
+        return null;
     }
 
     public Contact next() {
         if (!hasNext()) throw new NoSuchElementException();
         var result = nextContact;
         nextContact = null;
+        nextCalled = true;
         return result;
     }
 
@@ -48,6 +62,11 @@ public class ContactIterator implements Iterator<Contact> {
      */
     public void remove() {
         // you can only call remove() once after a next()
-        throw new UnsupportedOperationException("todo");
+        if (lastUsedIterator == null)
+            throw new IllegalStateException("root node was a leaf");
+        if (!nextCalled)
+            throw new IllegalStateException("remove() must be called after next()");
+        lastUsedIterator.remove();
+        nextCalled = false;
     }
 }

@@ -1,5 +1,8 @@
 package playground.decorator;
 
+import eu.javaspecialists.books.dynamicproxies.Proxies;
+
+import java.util.*;
 import java.util.stream.*;
 
 public class MyCollections {
@@ -24,7 +27,18 @@ public class MyCollections {
             public String toString() {
                 return collection.toString();
             }
+
+            @Override
+            public void printAll() {
+                collection.printAll();
+            }
         };
 
+    }
+    public static <E> ImmutableCollection<E> immutableViaProxy(MutableCollection<E> collection) {
+        return Proxies.filter(ImmutableCollection.class, collection);
+    }
+    public static <E> ImmutableCollection<E> immutableViaProxy(Collection<E> collection) {
+        return Proxies.filter(ImmutableCollection.class, collection);
     }
 }

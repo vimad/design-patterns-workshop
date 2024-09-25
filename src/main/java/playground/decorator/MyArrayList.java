@@ -54,4 +54,9 @@ public class MyArrayList<E> implements MutableCollection<E> {
     public String toString() {
         return elements.toString();
     }
+
+    @Override
+    public void printAll() {
+        stream().forEach(System.out::println);
+    }
 }

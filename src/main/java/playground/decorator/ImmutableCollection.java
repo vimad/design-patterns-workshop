@@ -6,4 +6,5 @@ public interface ImmutableCollection<E> {
     boolean isEmpty();
     int size();
     Stream<E> stream();
+    void printAll();
 }

@@ -13,13 +13,16 @@ public class SwitchFactory {
 
     public static Switch make(Fan fan) {
         return new Switch(
-            fan::startRotate, fan::stopRotate
+            // SAM - Single Abstract Method
+            fan::startRotate,
+            fan::stopRotate
         );
     }
 
     public static Switch make(Light light) {
         return new Switch(
-            light::turnOn, light::turnOff
+            light::turnOn,
+            light::turnOff
         );
     }
 }

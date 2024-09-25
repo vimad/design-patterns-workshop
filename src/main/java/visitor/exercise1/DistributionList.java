@@ -14,15 +14,21 @@ public class DistributionList implements Contact {
     private final Collection<Contact> contacts =
         new ConcurrentLinkedQueue<>();
 
-    public void sendMail(String msg) {
-        contacts.forEach(contact -> contact.sendMail(msg));
-    }
-
     public void add(Contact contact) {
         contacts.add(contact);
     }
 
     public void remove(Contact contact) {
         contacts.remove(contact);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+        contacts.forEach(contact -> contact.accept(visitor));
+    }
+
+    public int numberOfChildren() {
+        return contacts.size();
     }
 }

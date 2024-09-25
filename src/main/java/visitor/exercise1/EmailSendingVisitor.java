@@ -9,20 +9,18 @@ package visitor.exercise1;
 
 import java.util.*;
 
-/**
- * This visitor must return a unique set of all emails in the contact structure
- * in alphabetical order.
- */
-public class EmailGatheringVisitor implements Iterable<String>, Visitor {
-    private final Set<String> emails = new TreeSet<>();
+public class EmailSendingVisitor implements Visitor {
+    private final String msg;
 
-    public Iterator<String> iterator() {
-        return emails.stream().iterator(); // not allow remove()
+    public EmailSendingVisitor(String msg) {
+        this.msg = msg;
     }
 
     @Override
     public void visit(Person person) {
-        emails.add(person.email());
+        System.out.println("To: " + person.email());
+        System.out.println("Msg: " + msg);
+        System.out.println();
     }
 
     @Override

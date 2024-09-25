@@ -7,16 +7,21 @@
  */
 package state.exercise1;
 
-public abstract class State {
-    public int pay(Employee employee) {
-        throw new UnsupportedOperationException("todo");
+public interface State {
+    default int pay() {
+        return 0;
     }
 
-    public void advance(Employee employee) {
-        throw new UnsupportedOperationException("todo");
+    default State advance() {
+        return this;
     }
 
-    public void fire(Employee employee) {
-        throw new UnsupportedOperationException("todo");
+    default State fire() {
+        return this;
     }
+
+    State PROGRAMMER = new ProgrammerState();
+    State MANAGER = new ManagerState();
+    State RETIREE = new RetireeState();
+    State END = new EndState();
 }

@@ -39,13 +39,13 @@ public class StateTest {
     public void testDefaultStateMethods() {
         // The default behaviour in our state machine should just ignore
         // unexpected events.
-        class DefaultState extends State {
+        class DefaultState implements State {
         }
 
         State state = new DefaultState();
-        state.pay(null);
-        state.advance(null);
-        state.fire(null);
+        state.pay();
+        state.advance();
+        state.fire();
     }
 
     @Test

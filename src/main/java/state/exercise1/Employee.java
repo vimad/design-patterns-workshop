@@ -7,39 +7,39 @@
  */
 package state.exercise1;
 
+import java.util.*;
+
 /**
  * Code without clear state machine transitions.  It is very
  * ugly.  Your job is to use the state pattern to clean things
  * up.
  */
 public class Employee {
-    private int type = 0;
+    private static final Map<State, State> advanceStateTransitionMap =
+        Map.of(State.PROGRAMMER, State.MANAGER,
+            State.MANAGER, State.RETIREE,
+            State.RETIREE, State.END);
+    private static final Map<State, State> fireStateTransitionMap =
+        Map.of(State.PROGRAMMER, State.END,
+            State.MANAGER, State.END);
 
-    public Employee() {
-        type = 1; // programmer - that's what you start with
-    }
+    private State state = new ProgrammerState();
 
     public int pay() {
-        if (type == 1) { // programmer
-            System.out.println("Programmer getting paid");
-            return 3000;
-        }
-        if (type == 2) { // manager
-            System.out.println("Paying lots of $$$ to manager");
-            return 30000;
-        }
-        if (type == 3) { // retiree
-            System.out.println("Handing out crumbs to retiree");
-            return 5000;
-        }
-        return 0;
+        return state.pay();
     }
 
     public void advance() {
-        if (type < 4) type++;
+        setState(state.advance());
     }
 
     public void fire() {
-        if (type < 3) type = 4;
+        setState(state.fire());
+    }
+
+    private void setState(State state) {
+        System.out.println(this.state.getClass().getSimpleName() +
+            " -> " + state.getClass().getSimpleName());
+        this.state = state;
     }
 }
